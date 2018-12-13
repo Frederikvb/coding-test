@@ -28,7 +28,11 @@ RUN docker-php-ext-install pdo_mysql
 RUN docker-php-ext-install pdo_sqlite
 RUN docker-php-ext-install mysqli
 
-COPY . /var/www/html/server
 WORKDIR /var/www/html/server
-
+COPY composer.* ./
 RUN composer install --prefer-source --no-interaction
+
+COPY . /var/www/html/server
+
+
+
