@@ -1,0 +1,52 @@
+version: "3.7"
+services:
+  client: 
+    container_name: client
+    build: 
+      context: ./client
+    networks:
+      - frontend
+    volumes:
+      - ./client:/usr/src/app
+      - /usr/src/app/node_modules
+    command: npm run start
+  server:
+    container_name: server
+    build: 
+      context: ./server
+    networks:
+      - backend
+    volumes: 
+      - ./server/:/var/www/html/server/
+  apache:
+    container_name: apache
+    build:
+      context: ./apache
+    networks:
+      - backend
+      - frontend
+    ports:
+      - "80:80"
+      - "443:443" 
+    volumes:
+      - ./server/:/var/www/html/server/
+  mysql:
+    container_name: mysql
+    image: mysql:5.6
+    networks:
+      - backend
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=1234
+      - MYSQL_DATABASE=problemthree
+  redis:
+    container_name: redis
+    networks:
+      - backend
+    image: redis
+    ports:
+      - "6379:6379"
+networks:
+  backend:
+  frontend:
