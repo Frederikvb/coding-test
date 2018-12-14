@@ -3,11 +3,11 @@ FROM php:7.2-fpm-stretch
 RUN apt-get -y update --fix-missing
 RUN apt-get upgrade -y
 
-# Install useful tools
-RUN apt-get -y install vim 
+# important libraries
+RUN apt-get -y install --fix-missing apt-utils build-essential libcurl3 libcurl3-dev  
 
-# Install important libraries
-RUN apt-get -y install --fix-missing apt-utils build-essential git curl libcurl3 libcurl3-dev zip
+# useful tools
+RUN apt-get -y install vim iputils-ping git curl zip 
 
 # Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
@@ -18,7 +18,7 @@ RUN apt-get install -y \
     && pecl install imagick \
 	&& docker-php-ext-enable imagick
 
-# Install xdebug
+# Xdebug
 RUN pecl install xdebug-2.6.0
 RUN docker-php-ext-enable xdebug
 
@@ -28,6 +28,7 @@ RUN docker-php-ext-install pdo_mysql
 RUN docker-php-ext-install pdo_sqlite
 RUN docker-php-ext-install mysqli
 
+# Composer install
 WORKDIR /var/www/html/server
 COPY composer.* ./
 RUN composer install --prefer-source --no-interaction

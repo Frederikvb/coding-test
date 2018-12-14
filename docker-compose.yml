@@ -9,7 +9,7 @@ services:
     volumes:
       - ./client:/usr/src/app
       - /usr/src/app/node_modules
-    command: npm run start
+    command: npm run start 
   server:
     container_name: server
     build: 
@@ -30,7 +30,7 @@ services:
       - "80:80"
       - "443:443" 
     volumes:
-      - ./server/:/var/www/html/server/
+      - ./client/public/:/var/www/html/client
   mysql:
     container_name: mysql
     image: mysql:5.6

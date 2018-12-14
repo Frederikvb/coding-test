@@ -18,14 +18,22 @@ b843f9e929aa        mysql:5.6            "docker-entrypoint.s…"   17 seconds a
 ```
 
 ## Guidelines
+
 - frontend-url: teamleader.localhost
 
   backend-url: teamleader.localhost/api  
 
-- run the php unit-tests:
+  production-url: prod.teamleader.localhost
+
+  ***note:*** teamleader.localhost should resolve to localhost (127.0.0.1). Edit /etc/hosts when this is not the case.
+
+- Build production for the client:
+  ```
+    docker exec -it client npm run build
+  ```
+
+- run the phpunit tests:
   ```
   docker exec -it server ./vendor/bin/phpunit --configuration phpunit.xml
   ```
   
-## Remarks
-- Building the client/server for production is a tad unclear to me, so this is not implemented.
